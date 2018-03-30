@@ -18,7 +18,7 @@ class TwoDMaze(TwoDEnv, utils.EzPickle):
         utils.EzPickle.__init__(self)
         TwoDEnv.__init__(self, get_asset_xml('twod_maze.xml'), 2, xbounds=[-0.3,0.3], ybounds=[-0.3,0.3])
 
-    def _step(self, a):
+    def step(self, a):
         self.do_simulation(a, self.frame_skip)
         ob = self._get_obs()
         pos = ob[0:2]
@@ -42,8 +42,8 @@ class TwoDMaze(TwoDEnv, utils.EzPickle):
         return self._get_obs()
 
     def _get_obs(self):
-        #return np.concatenate([self.model.data.qpos, self.model.data.qvel]).ravel()
-        return np.concatenate([self.model.data.qpos]).ravel() - INIT_POS
+        #return np.concatenate([self.sim.data.qpos, self.sim.data.qvel]).ravel()
+        return np.concatenate([self.sim.data.qpos]).ravel() - INIT_POS
 
     def viewer_setup(self):
         v = self.viewer

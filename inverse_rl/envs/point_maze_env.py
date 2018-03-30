@@ -22,7 +22,7 @@ class PointMazeEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         with model.asfile() as f:
             mujoco_env.MujocoEnv.__init__(self, f.name, 5)
 
-    def _step(self, a):
+    def step(self, a):
         vec_dist = self.get_body_com("particle") - self.get_body_com("target")
 
         reward_dist = - np.linalg.norm(vec_dist)  # particle to target

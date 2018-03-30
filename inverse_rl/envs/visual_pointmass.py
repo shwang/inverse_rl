@@ -29,7 +29,7 @@ class VisualTwoDMaze(mujoco_env.MujocoEnv, utils.EzPickle):
         #data, width, height = self._get_viewer().get_image()
         self.observation_space = Box(0, 1, shape=(width, height, 3))
 
-    def _step(self, a):
+    def step(self, a):
         self.do_simulation(a, self.frame_skip)
         state = self._get_state()
         pos = state[0:2]
@@ -55,8 +55,8 @@ class VisualTwoDMaze(mujoco_env.MujocoEnv, utils.EzPickle):
         return self._get_obs()
 
     def _get_state(self):
-        #return np.concatenate([self.model.data.qpos, self.model.data.qvel]).ravel()
-        return np.concatenate([self.model.data.qpos]).ravel() - INIT_POS
+        #return np.concatenate([self.sim.data.qpos, self.sim.data.qvel]).ravel()
+        return np.concatenate([self.sim.data.qpos]).ravel() - INIT_POS
 
     def _get_obs(self):
         self._get_viewer().render()
@@ -110,7 +110,7 @@ class VisualPointMazeEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         else:
             self.observation_space = Box(0, 1, shape=(width, height, 3))
 
-    def _step(self, a):
+    def step(self, a):
         vec_dist = self.get_body_com("particle") - self.get_body_com("target")
 
         reward_dist = - np.linalg.norm(vec_dist)  # particle to target
