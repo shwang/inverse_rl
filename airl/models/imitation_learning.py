@@ -1,11 +1,11 @@
 import numpy as np
 import tensorflow as tf
 
-from inverse_rl.models.architectures import feedforward_energy, relu_net
-from inverse_rl.models.tf_util import discounted_reduce_sum
-from inverse_rl.utils.general import TrainingIterator
-from inverse_rl.utils.hyperparametrized import Hyperparametrized
-from inverse_rl.utils.math_utils import gauss_log_pdf, categorical_log_pdf
+from airl.models.architectures import feedforward_energy, relu_net
+from airl.models.tf_util import discounted_reduce_sum
+from airl.utils.general import TrainingIterator
+from airl.utils.hyperparametrized import Hyperparametrized
+from airl.utils.math_utils import gauss_log_pdf, categorical_log_pdf
 from sandbox.rocky.tf.misc import tensor_utils
 
 LOG_REG = 1e-8

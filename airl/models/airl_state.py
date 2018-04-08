@@ -2,10 +2,10 @@ import tensorflow as tf
 import numpy as np
 from sandbox.rocky.tf.spaces.box import Box
 
-from inverse_rl.models.fusion_manager import RamFusionDistr
-from inverse_rl.models.imitation_learning import SingleTimestepIRL
-from inverse_rl.models.architectures import relu_net
-from inverse_rl.utils import TrainingIterator
+from airl.models.fusion_manager import RamFusionDistr
+from airl.models.imitation_learning import SingleTimestepIRL
+from airl.models.architectures import relu_net
+from airl.utils import TrainingIterator
 
 
 

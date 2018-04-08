@@ -7,7 +7,7 @@ from sandbox.rocky.tf.samplers.batch_sampler import BatchSampler
 from sandbox.rocky.tf.samplers.vectorized_sampler import VectorizedSampler
 from rllab.sampler.utils import rollout
 
-from inverse_rl.utils.hyperparametrized import Hyperparametrized
+from airl.utils.hyperparametrized import Hyperparametrized
 
 
 class BatchPolopt(RLAlgorithm, metaclass=Hyperparametrized):

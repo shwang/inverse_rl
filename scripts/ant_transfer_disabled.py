@@ -7,12 +7,12 @@ from rllab.baselines.linear_feature_baseline import LinearFeatureBaseline
 from rllab.envs.gym_env import GymEnv
 
 
-from inverse_rl.algos.irl_trpo import IRLTRPO
-from inverse_rl.envs.env_utils import CustomGymEnv
-from inverse_rl.models.airl_state import *
-from inverse_rl.models.tf_util import load_prior_params
-from inverse_rl.utils.log_utils import rllab_logdir, load_latest_experts
-from inverse_rl.utils.hyper_sweep import run_sweep_parallel, run_sweep_serial
+from airl.algos.irl_trpo import IRLTRPO
+from airl.envs.env_utils import CustomGymEnv
+from airl.models.airl_state import *
+from airl.models.tf_util import load_prior_params
+from airl.utils.log_utils import rllab_logdir, load_latest_experts
+from airl.utils.hyper_sweep import run_sweep_parallel, run_sweep_serial
 
 
 DATA_DIR = 'data/ant_state_irl'

@@ -1,14 +1,14 @@
 import tensorflow as tf
 
-from inverse_rl.algos.trpo import TRPO
-from inverse_rl.models.tf_util import get_session_config
+from airl.algos.trpo import TRPO
+from airl.models.tf_util import get_session_config
 from sandbox.rocky.tf.policies.gaussian_mlp_policy import GaussianMLPPolicy
 from sandbox.rocky.tf.envs.base import TfEnv
 from rllab.baselines.linear_feature_baseline import LinearFeatureBaseline
 
-from inverse_rl.envs.env_utils import CustomGymEnv
-from inverse_rl.utils.log_utils import rllab_logdir
-from inverse_rl.utils.hyper_sweep import run_sweep_parallel, run_sweep_serial
+from airl.envs.env_utils import CustomGymEnv
+from airl.utils.log_utils import rllab_logdir
+from airl.utils.hyper_sweep import run_sweep_parallel, run_sweep_serial
 
 
 def main(exp_name, ent_wt=1.0):

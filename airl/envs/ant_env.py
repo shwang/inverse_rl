@@ -1,7 +1,7 @@
 import numpy as np
 from gym import utils
 from gym.envs.mujoco import mujoco_env
-from inverse_rl.envs.dynamic_mjc.model_builder import MJCModel
+from airl.envs.dynamic_mjc.model_builder import MJCModel
 from rllab.misc import logger
 
 def ant_env(gear=150, eyes=True):

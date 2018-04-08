@@ -4,7 +4,7 @@ from sandbox.rocky.tf.policies.gaussian_mlp_policy import GaussianMLPPolicy
 from rllab.baselines.linear_feature_baseline import LinearFeatureBaseline
 from rllab.envs.gym_env import GymEnv
 
-from inverse_rl.utils.log_utils import rllab_logdir
+from airl.utils.log_utils import rllab_logdir
 
 def main():
     env = TfEnv(GymEnv('Pendulum-v0', record_video=False, record_log=False))

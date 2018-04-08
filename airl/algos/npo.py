@@ -1,15 +1,16 @@
+import numpy as np
+
 from rllab.misc import ext
 from rllab.misc.overrides import overrides
 import rllab.misc.logger as logger
-from inverse_rl.algos.penalty_lbfgs_optimizer import PenaltyLbfgsOptimizer
-from inverse_rl.algos.irl_batch_polopt import IRLBatchPolopt
+from sandbox.rocky.tf.optimizers.penalty_lbfgs_optimizer import PenaltyLbfgsOptimizer
 from sandbox.rocky.tf.misc import tensor_utils
 import tensorflow as tf
-import numpy as np
-from sandbox.rocky.tf.optimizers.conjugate_gradient_optimizer import ConjugateGradientOptimizer
+
+from airl.algos.batch_polopt import BatchPolopt
 
 
-class IRLNPO(IRLBatchPolopt):
+class NPO(BatchPolopt):
     """
     Natural Policy Optimization.
     """
@@ -19,16 +20,16 @@ class IRLNPO(IRLBatchPolopt):
             optimizer=None,
             optimizer_args=None,
             step_size=0.01,
-            entropy_weight=1.0,
+            entropy_weight=0.0,
             **kwargs):
         if optimizer is None:
             if optimizer_args is None:
-                optimizer_args = dict(name='lbfgs')
+                optimizer_args = dict()
             optimizer = PenaltyLbfgsOptimizer(**optimizer_args)
         self.optimizer = optimizer
         self.step_size = step_size
         self.pol_ent_wt = entropy_weight
-        super(IRLNPO, self).__init__(**kwargs)
+        super(NPO, self).__init__(**kwargs)
 
     @overrides
     def init_opt(self):
@@ -46,13 +47,6 @@ class IRLNPO(IRLBatchPolopt):
             ndim=1 + is_recurrent,
             dtype=tf.float32,
         )
-
-        input_list = [
-            obs_var,
-            action_var,
-            advantage_var,
-        ]
-
         dist = self.policy.distribution
 
         old_dist_info_vars = {
@@ -82,14 +76,13 @@ class IRLNPO(IRLBatchPolopt):
                 ent = tf.reduce_sum(log_std + tf.log(tf.sqrt(2 * np.pi * np.e)), reduction_indices=-1)
             elif 'prob' in dist_info_vars:
                 prob = dist_info_vars['prob']
-                ent = -tf.reduce_sum(prob*tf.log(prob), reduction_indices=-1)
+                ent = - tf.reduce_sum(prob*tf.log(prob), reduction_indices=-1)
             else:
                 raise NotImplementedError()
             ent = tf.stop_gradient(ent)
             adv = advantage_var + self.pol_ent_wt*ent
         else:
             adv = advantage_var
-
 
         if is_recurrent:
             mean_kl = tf.reduce_sum(kl * valid_var) / tf.reduce_sum(valid_var)
@@ -98,7 +91,11 @@ class IRLNPO(IRLBatchPolopt):
             mean_kl = tf.reduce_mean(kl)
             surr_loss = - tf.reduce_mean(lr * adv)
 
-        input_list += state_info_vars_list + old_dist_info_vars_list
+        input_list = [
+                         obs_var,
+                         action_var,
+                         advantage_var,
+                     ] + state_info_vars_list + old_dist_info_vars_list
         if is_recurrent:
             input_list.append(valid_var)
 
@@ -115,9 +112,8 @@ class IRLNPO(IRLBatchPolopt):
     def optimize_policy(self, itr, samples_data):
         all_input_values = tuple(ext.extract(
             samples_data,
-            "observations", "actions", "advantages",
+            "observations", "actions", "advantages"
         ))
-
         agent_infos = samples_data["agent_infos"]
         state_info_list = [agent_infos[k] for k in self.policy.state_info_keys]
         dist_info_list = [agent_infos[k] for k in self.policy.distribution.dist_info_keys]
@@ -146,8 +142,6 @@ class IRLNPO(IRLBatchPolopt):
         return dict(
             itr=itr,
             policy=self.policy,
-            policy_params=self.policy.get_param_values(),
-            irl_params=self.get_irl_params(),
             baseline=self.baseline,
             env=self.env,
         )

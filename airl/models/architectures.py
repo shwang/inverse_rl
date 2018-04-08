@@ -1,5 +1,5 @@
 import tensorflow as tf
-from inverse_rl.models.tf_util import relu_layer, linear
+from airl.models.tf_util import relu_layer, linear
 
 
 def make_relu_net(layers=2, dout=1, d_hidden=32):

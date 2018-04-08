@@ -8,7 +8,7 @@ import rllab.misc.logger as rllablogger
 import tensorflow as tf
 import numpy as np
 
-from inverse_rl.utils.hyperparametrized import extract_hyperparams
+from airl.utils.hyperparametrized import extract_hyperparams
 
 @contextlib.contextmanager
 def rllab_logdir(algo=None, dirname=None):

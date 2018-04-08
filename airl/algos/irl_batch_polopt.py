@@ -10,7 +10,7 @@ from sandbox.rocky.tf.samplers.vectorized_sampler import VectorizedSampler
 import numpy as np
 from collections import deque
 
-from inverse_rl.utils.hyperparametrized import Hyperparametrized
+from airl.utils.hyperparametrized import Hyperparametrized
 
 
 class IRLBatchPolopt(RLAlgorithm, metaclass=Hyperparametrized):

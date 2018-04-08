@@ -1,4 +1,4 @@
-from inverse_rl.algos.irl_npo import IRLNPO
+from airl.algos.irl_npo import IRLNPO
 from sandbox.rocky.tf.optimizers.conjugate_gradient_optimizer import ConjugateGradientOptimizer
 
 
