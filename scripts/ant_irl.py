@@ -12,7 +12,7 @@ from airl.utils.log_utils import rllab_logdir, load_latest_experts, load_latest_
 from airl.utils.hyper_sweep import run_sweep_parallel, run_sweep_serial
 
 def main(exp_name=None, fusion=False):
-    env = TfEnv(CustomGymEnv('CustomAnt-v0', record_video=False, record_log=False))
+    env = TfEnv(CustomGymEnv('airl/CustomAnt-v0', record_video=False, record_log=False))
 
     # load ~2 iterations worth of data from each forward RL experiment as demos
     experts = load_latest_experts_multiple_runs('data/ant_data_collect', n=2)

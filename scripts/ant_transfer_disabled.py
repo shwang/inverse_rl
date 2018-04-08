@@ -17,7 +17,7 @@ from airl.utils.hyper_sweep import run_sweep_parallel, run_sweep_serial
 
 DATA_DIR = 'data/ant_state_irl'
 def main(exp_name, params_folder=None):
-    env = TfEnv(CustomGymEnv('DisabledAnt-v0', record_video=False, record_log=False))
+    env = TfEnv(CustomGymEnv('airl/DisabledAnt-v0', record_video=False, record_log=False))
 
     irl_itr = 100  # earlier IRL iterations overfit less; 100 seems to work well.
     params_file = os.path.join(DATA_DIR, '%s/itr_%d.pkl' % (params_folder, irl_itr))

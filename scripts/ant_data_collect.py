@@ -13,7 +13,7 @@ from airl.utils.hyper_sweep import run_sweep_parallel, run_sweep_serial
 
 def main(exp_name, ent_wt=1.0):
     tf.reset_default_graph()
-    env = TfEnv(CustomGymEnv('CustomAnt-v0', record_video=False, record_log=False))
+    env = TfEnv(CustomGymEnv('airl/CustomAnt-v0', record_video=False, record_log=False))
     policy = GaussianMLPPolicy(name='policy', env_spec=env.spec, hidden_sizes=(32, 32))
     with tf.Session(config=get_session_config()) as sess:
         algo = TRPO(

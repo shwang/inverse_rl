@@ -7,7 +7,7 @@ from rllab.envs.gym_env import GymEnv
 from airl.utils.log_utils import rllab_logdir
 
 def main():
-    env = TfEnv(GymEnv('Pendulum-v0', record_video=False, record_log=False))
+    env = TfEnv(GymEnv('airl/Pendulum-v0', record_video=False, record_log=False))
     policy = GaussianMLPPolicy(name='policy', env_spec=env.spec, hidden_sizes=(32, 32))
     algo = TRPO(
         env=env,
