@@ -63,10 +63,10 @@ class ImitationLearning(object, metaclass=Hyperparametrized):
         for path in paths:
             if 'observations_next' in path:
                 continue
-            nobs = path['observations'][1:]
-            nact = path['actions'][1:]
-            nobs = np.r_[nobs, pad_val*np.expand_dims(np.ones_like(nobs[0]), axis=0)]
-            nact = np.r_[nact, pad_val*np.expand_dims(np.ones_like(nact[0]), axis=0)]
+            obs = path['observations']
+            act = path['actions']
+            nobs = np.r_[obs[1:], pad_val*np.expand_dims(np.ones_like(obs[0]), axis=0)]
+            nact = np.r_[act[1:], pad_val * np.expand_dims(np.ones_like(act[0]), axis=0)]
             path['observations_next'] = nobs
             path['actions_next'] = nact
         return paths
