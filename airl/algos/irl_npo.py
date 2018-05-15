@@ -149,5 +149,5 @@ class IRLNPO(IRLBatchPolopt):
             policy_params=self.policy.get_param_values(),
             irl_params=self.get_irl_params(),
             baseline=self.baseline,
-            env=self.env,
+            #env=self.env,
         )
