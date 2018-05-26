@@ -111,10 +111,8 @@ class CustomGymEnv(RllabGymEnv):
                  register_fn=None, wrapper_args = (), record_log=False, record_video=False,
                  post_create_env_seed=None):
         Serializable.quick_init(self, locals())
-        if register_fn is None:
-            import airl.envs
-            register_fn = airl.envs.register_custom_envs
-        register_fn()  # Force register
+        if register_fn is not None:
+            register_fn()  # Force register
         self.env_name = env_name
         super(CustomGymEnv, self).__init__(env_name, wrappers=gym_wrappers,
                                            wrapper_args=wrapper_args,
