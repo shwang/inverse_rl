@@ -275,11 +275,13 @@ class AIRLStateAction(SingleTimestepIRL):
                  discrim_arch_args={},
                  l2_reg=0,
                  discount=1.0,
+                 max_itrs=100,
                  name='gcl'):
         super(AIRLStateAction, self).__init__()
         self.dO = env_spec.observation_space.flat_dim
         self.dU = env_spec.action_space.flat_dim
         self.set_demos(expert_trajs)
+        self.max_itrs = max_itrs
 
         # build energy model
         with tf.variable_scope(name) as _vs:
@@ -315,7 +317,7 @@ class AIRLStateAction(SingleTimestepIRL):
             self._make_param_ops(_vs)
 
 
-    def fit(self, paths, policy=None, batch_size=32, max_itrs=100, logger=None, lr=1e-3,**kwargs):
+    def fit(self, paths, policy=None, batch_size=32, logger=None, lr=1e-3,**kwargs):
         #self._compute_path_probs(paths, insert=True)
         self.eval_expert_probs(paths, policy, insert=True)
         self.eval_expert_probs(self.expert_trajs, policy, insert=True)
@@ -323,7 +325,7 @@ class AIRLStateAction(SingleTimestepIRL):
         expert_obs, expert_acts, expert_probs = self.extract_paths(self.expert_trajs, keys=('observations', 'actions', 'a_logprobs'))
 
         # Train discriminator
-        for it in TrainingIterator(max_itrs, heartbeat=5):
+        for it in TrainingIterator(self.max_itrs, heartbeat=5):
             obs_batch, act_batch, lprobs_batch = \
                 self.sample_batch(obs, acts, path_probs, batch_size=batch_size)
 
