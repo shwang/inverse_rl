@@ -13,7 +13,8 @@ setup(
         'envs': ['*.xml'],
     },
     install_requires=[
-        'rllab>=0.1.0', 'gym>=0.10.4', 'numpy>=1.12', 'tensorflow>=1.4.0',
+        'rllab@git+https://github.com/shwang/rllab.git',
+        'mujoco_py',
     ],
 
     # Metadata
