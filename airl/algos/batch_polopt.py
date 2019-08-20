@@ -38,7 +38,6 @@ class BatchPolopt(RLAlgorithm, metaclass=Hyperparametrized):
             sampler_cls=None,
             sampler_args=None,
             force_batch_sampler=False,
-            **kwargs
     ):
         """
         :param env: Environment
@@ -121,7 +120,7 @@ class BatchPolopt(RLAlgorithm, metaclass=Hyperparametrized):
                 logger.log("Optimizing policy...")
                 self.optimize_policy(itr, samples_data)
                 logger.log("Saving snapshot...")
-                params = self.get_itr_snapshot(itr, samples_data)  # , **kwargs)
+                params = self.get_itr_snapshot(itr, samples_data)
                 if self.store_paths:
                     params["paths"] = samples_data["paths"]
                 logger.save_itr_params(itr, params)
