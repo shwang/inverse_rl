@@ -14,7 +14,7 @@ setup(
     },
     install_requires=[
         'rllab@git+https://github.com/shwang/rllab.git',
-        'mujoco_py',
+        'mujoco_py<2.0,>=1.50',
     ],
 
     # Metadata
